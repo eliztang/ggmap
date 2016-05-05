@@ -53,7 +53,7 @@
 #'
 route <- function(from, to, mode = c("driving","walking","bicycling", "transit"),
   structure = c("legs","route"), output = c("simple","all"), alternatives = FALSE,
-  messaging = FALSE, sensor = FALSE, override_limit = FALSE)
+  messaging = FALSE, sensor = FALSE, override_limit = FALSE, key=NULL)
 {
 
   # check parameters
@@ -80,6 +80,7 @@ route <- function(from, to, mode = c("driving","walking","bicycling", "transit")
   alts4url <- paste("alternatives=", tolower(as.character(alternatives)), sep = "")
   sensor4url <- paste("sensor=", tolower(as.character(sensor)), sep = "")
   posturl <- paste(origin, destination, mode4url, unit4url, alts4url, sensor4url, sep = "&")
+  posturl <- if (is.null(key)) posturl else paste0(posturl,"&key=",key)
   url_string <- paste("http://maps.googleapis.com/maps/api/directions/json?", posturl, sep = "")
   url_string <- URLencode(url_string)
 
